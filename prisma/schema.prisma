@@ -7,4 +7,67 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model User {
+  id       Int    @id @default(autoincrement())
+  email    String @unique
+  password String
 
+  @@map("users")
+}
+
+model Teacher {
+  id   Int    @id @default(autoincrement())
+  name String @unique
+
+  TeachersDiscipline TeacherDiscipline[]
+  @@map("teachers")
+}
+
+model Term {
+  id     Int @id @default(autoincrement())
+  number Int @unique
+
+  Discipline Discipline[]
+  @@map("terms")
+}
+
+model Discipline {
+  id     Int    @id @default(autoincrement())
+  name   String @unique
+  term   Term   @relation(fields: [termId], references: [id])
+  termId Int
+
+  TeachersDiscipline TeacherDiscipline[]
+  @@map("disciplines")
+}
+
+model TeacherDiscipline {
+  id           Int        @id @default(autoincrement())
+  teacher      Teacher    @relation(fields: [teacherId], references: [id])
+  teacherId    Int
+  discipline   Discipline @relation(fields: [disciplineId], references: [id])
+  disciplineId Int
+
+  Test Test[]
+  @@map("teachersDisciplines")
+}
+
+model Category {
+  id   Int    @id @default(autoincrement())
+  name String @unique
+
+  Test Test[]
+  @@map("categories")
+}
+
+model Test {
+  id                  Int               @id @default(autoincrement())
+  name                String
+  pdfUrl              String
+  category            Category          @relation(fields: [categoryId], references: [id])
+  categoryId          Int
+  teacherDiscipline   TeacherDiscipline @relation(fields: [teacherDisciplineId], references: [id])
+  teacherDisciplineId Int
+
+  @@map("tests")
+}
