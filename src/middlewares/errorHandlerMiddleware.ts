@@ -5,7 +5,7 @@ interface ErrorHandler{
     unauthorized: number;
     not_found: number;
     conflict: number;
-    unprocessable_entity: 422;
+    unprocessable_entity: number;
 }
 
 export default function errorHandlerMiddleware(error: any, request: Request, res: Response, next: NextFunction){
@@ -18,6 +18,10 @@ export default function errorHandlerMiddleware(error: any, request: Request, res
     }
 
     console.log(error);
+    
+    if (!error.message) {
+        error.message = "An error as occurred"
+    }
 
     if (!errorTypes[error.type]) {
         return res.sendStatus(500);
