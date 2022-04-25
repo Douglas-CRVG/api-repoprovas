@@ -13,7 +13,7 @@ export async function signUp(req: Request, res: Response){
 
 export async function signIn(req: Request, res: Response) {
     const data: CreateUser = req.body;
-    const result = await userService.signIn(data);
+    const token = await userService.signIn(data);
 
-    res.status(200).send(result);
+    res.status(200).send({token});
 }

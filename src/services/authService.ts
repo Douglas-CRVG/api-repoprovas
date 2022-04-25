@@ -23,7 +23,7 @@ function formatDataUser(user: CreateUser): CreateUser {
 
 async function validateEmail(email: string) {
     const emailExists = await userRepository.findByEmail(email);
-    if (emailExists.email) throw { type: "conflict" };
+    if (emailExists?.email) throw { type: "conflict" };
 }
 
 type CreateSession = Omit<Session, "id">
@@ -43,7 +43,7 @@ export async function signIn(user: CreateUser) {
 
 async function checkExist(email: string) {
     const user = await userRepository.findByEmail(email);
-    if (!user.email) throw { type: "unauthorized" };
+    if (!user?.email) throw { type: "unauthorized" };
 
     return user
 }

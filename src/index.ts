@@ -12,7 +12,7 @@ server.use(json());
 server.use(router);
 server.use(errorHandlerMiddleware)
 
-const PORT = process.env.PORT || 4000;
+const PORT = process.env.PORT || 5000;
 server.listen(PORT, () => {
     console.log(`Running on port ${PORT}`);
 });
