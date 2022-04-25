@@ -8,5 +8,12 @@ export async function signUp(req: Request, res: Response){
     const data: CreateUser = req.body;
     const result = await userService.signUp(data);
 
-    res.status(201).send(result)
+    res.status(201).send(result);
+}
+
+export async function signIn(req: Request, res: Response) {
+    const data: CreateUser = req.body;
+    const result = await userService.signIn(data);
+
+    res.status(200).send(result);
 }
